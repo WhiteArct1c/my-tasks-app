@@ -48,6 +48,14 @@ app.put('/tasks/:id', (req: Request, res: Response) => {
     res.json(task);
 });
 
+app.patch('/tasks/:id', (req: Request, res: Response) => {
+    const task = tasks.find(t => t.id === parseInt(req.params.id));
+    if (!task) return res.status(404).send('Task not found');
+
+    task.done = true;
+    res.json(task);
+});
+
 app.delete('/tasks/:id', (req: Request, res: Response) => {
     const taskIndex = tasks.findIndex(t => t.id === parseInt(req.params.id));
     if (taskIndex === -1) return res.status(404).send('Task not found');
