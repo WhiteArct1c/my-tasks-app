@@ -38,7 +38,7 @@ app.post('/tasks', (req: Request, res: Response) => {
 });
 
 app.put('/tasks/:id', (req: Request, res: Response) => {
-    const task = tasks.find(t => t.id === parseInt(req.params.id));
+   const task = tasks.find(t => t.id === parseInt(req.params.id));
     if (!task) return res.status(404).send('Task not found');
 
     const { description, done }: { description?: string; done?: boolean } = req.body;
