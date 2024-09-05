@@ -37,6 +37,14 @@ app.post('/tasks', (req: Request, res: Response) => {
     res.status(201).json(newTask);
 });
 
+app.patch('/tasks/:id/complete', (req: Request, res: Response) => {
+    const task = tasks.find(t => t.id === parseInt(req.params.id));
+    if (!task) return res.status(404).send('Task not found');
+
+    task.done = true;
+    res.json(task);
+});
+
 app.put('/tasks/:id', (req: Request, res: Response) => {
     const task = tasks.find(t => t.id === parseInt(req.params.id));
     if (!task) return res.status(404).send('Task not found');
