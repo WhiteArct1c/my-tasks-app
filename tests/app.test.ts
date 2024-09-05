@@ -46,4 +46,18 @@ describe('Tasks API', () => {
         const response = await request(app).get(`/tasks/${createdTaskId}`);
         expect(response.statusCode).toBe(404);
     });
+
+    it('should mark a task as complete', async () => {
+        const newTask = { description: 'Test task', done: false };
+        const response = await request(app).post('/tasks').send(newTask);
+        const taskId = response.body.id;
+
+        const patchResponse = await request(app).patch(`/tasks/${taskId}`);
+        expect(patchResponse.statusCode).toBe(200);
+        expect(patchResponse.body).toHaveProperty('done', true);
+
+        const getResponse = await request(app).get(`/tasks/${taskId}`);
+        expect(getResponse.statusCode).toBe(200);
+        expect(getResponse.body).toHaveProperty('done', true);
+    });
 });
